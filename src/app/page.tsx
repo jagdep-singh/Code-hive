@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./Home.module.css"; // import your CSS
-import Head from "next/head";
+
 
 export default function Home() {
   const [roomId, setRoomId] = useState("");
