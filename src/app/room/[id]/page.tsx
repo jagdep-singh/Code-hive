@@ -8,14 +8,13 @@ import {
   FiDownload,
   FiUpload,
   FiLogOut,
-  // FiFolder,
-  // FiFile,
-  // FiTrash2,
-  // FiPlus,
+  FiFolder,
+  FiFile,
+  FiTrash2,
+  FiPlus,
   FiCopy,
 } from 'react-icons/fi';
 import Head from 'next/head';
-
 
 // Dynamically import MonacoEditor without SSR
 const MonacoEditor = dynamic(() => import('@monaco-editor/react'), { ssr: false });
@@ -49,7 +48,7 @@ export default function RoomPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState<string>('');
   // const [showChat, setShowChat] = useState<boolean>(true); // Commented out
-  const [language, setLanguage] = useState<string>('javascript');
+  const [language, setLanguage] = useState<string>('python');
   const [fileSystem, setFileSystem] = useState<FileItem[]>([
     {
       name: 'main',
@@ -203,34 +202,34 @@ export default function RoomPage() {
   };
 
   // Render the file system recursively
-  // const renderFileSystem = (items: FileItem[], path: number[] = []) => {
-  //   return items.map((item, index) => (
-  //     <div key={item.name} className="ml-4">
-  //       {item.type === 'folder' ? (
-  //         <div>
-  //           <FiFolder className="inline-block mr-2" /> {item.name}
-  //           <button onClick={() => addFolder([...path, index])} className="ml-2">
-  //             <FiPlus />
-  //           </button>
-  //           <button onClick={() => addFile([...path, index])} className="ml-2">
-  //             <FiFile />
-  //           </button>
-  //           <button onClick={() => deleteItem([...path, index])} className="ml-2">
-  //             <FiTrash2 />
-  //           </button>
-  //           {item.children && renderFileSystem(item.children, [...path, index])}
-  //         </div>
-  //       ) : (
-  //         <div>
-  //           <FiFile className="inline-block mr-2" /> {item.name}
-  //           <button onClick={() => deleteItem([...path, index])} className="ml-2">
-  //             <FiTrash2 />
-  //           </button>
-  //         </div>
-  //       )}
-  //     </div>
-  //   ));
-  // };
+  const renderFileSystem = (items: FileItem[], path: number[] = []) => {
+    return items.map((item, index) => (
+      <div key={item.name} className="ml-4">
+        {item.type === 'folder' ? (
+          <div>
+            <FiFolder className="inline-block mr-2" /> {item.name}
+            <button onClick={() => addFolder([...path, index])} className="ml-2">
+              <FiPlus />
+            </button>
+            <button onClick={() => addFile([...path, index])} className="ml-2">
+              <FiFile />
+            </button>
+            <button onClick={() => deleteItem([...path, index])} className="ml-2">
+              <FiTrash2 />
+            </button>
+            {item.children && renderFileSystem(item.children, [...path, index])}
+          </div>
+        ) : (
+          <div>
+            <FiFile className="inline-block mr-2" /> {item.name}
+            <button onClick={() => deleteItem([...path, index])} className="ml-2">
+              <FiTrash2 />
+            </button>
+          </div>
+        )}
+      </div>
+    ));
+  };
 
   // Handle copying the Room ID
   const handleCopyRoomId = () => {
@@ -283,10 +282,10 @@ export default function RoomPage() {
                 </option>
               ))}
             </select>
-            {/* <div className="mt-4">
+            <div className="mt-4">
               <h3 className="text-lg font-semibold mb-2">File System</h3>
               {renderFileSystem(fileSystem)}
-            </div> */}
+            </div>
           </div>
           <div className="mt-4">
             <div className="text-sm mb-2">Room ID: {roomId}</div>
